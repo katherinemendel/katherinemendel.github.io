@@ -114,8 +114,24 @@ header li a {
   text-decoration: none;
 }
 
-/* Essential background for the navbar to fill iOS status bar */
-body::before {
+/* iOS homescreen app specific styling */
+.ios-standalone nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #192841;
+  z-index: 1000;
+  padding-top: 20px; /* Fixed value for status bar in iOS standalone mode */
+}
+
+.ios-standalone body {
+  padding-top: 80px; /* 60px (nav) + 20px (status bar) */
+}
+
+/* Regular browser styling */
+:not(.ios-standalone) body::before {
   content: '';
   position: fixed;
   top: 0;
