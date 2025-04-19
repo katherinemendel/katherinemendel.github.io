@@ -64,6 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Exchange the code for a Strava token
             exchangeCodeForToken(stravaCode);
         }
+        
+        // Add a page reload after a short delay to ensure everything updates
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
     } else {
         // Check if we have valid tokens and update button visibility
         function updateButtonVisibility() {
