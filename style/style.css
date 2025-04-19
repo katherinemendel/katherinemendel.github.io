@@ -210,26 +210,129 @@ nav li a {
 }
 
 .activity-card {
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(25, 40, 65, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(179, 207, 221, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.activity-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background-color: #5C6B9C;
+  opacity: 0.8;
 }
 
 .activity-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(25, 40, 65, 0.12);
 }
 
 .activity-card h3 {
-  color: #5C6B9C;
+  color: #5C6B9C; /* Accent blue color from your theme */
   margin-top: 0;
+  font-size: 1.5em; /* Match connect prompt heading */
+  font-weight: 600; /* Match connect prompt heading weight */
+  margin-bottom: 10px;
+  font-family: "Baskerville", serif;
 }
 
 .activity-date {
-  color: #777;
+  color: #5C6B9C;
   font-size: 0.9em;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.activity-date::before {
+  content: '📅';
+  margin-right: 6px;
+}
+
+/* Activity details styling */
+.activity-card p {
+  margin: 8px 0;
+  color: #5C6B9C;
+  font-size: 1.1em; /* Increased to match connect prompt text size */
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+}
+
+.activity-card p::before {
+  margin-right: 8px;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.activity-card p:nth-of-type(1)::before { content: '🏃‍♂️'; } /* Type */
+.activity-card p:nth-of-type(2)::before { content: '📏'; } /* Distance */
+.activity-card p:nth-of-type(3)::before { content: '⏱️'; } /* Duration */
+.activity-card p:nth-of-type(4)::before { content: '⚡'; } /* Pace - lightning bolt for speed */
+
+/* Songs section styling */
+.songs-container {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(179, 207, 221, 0.3);
+}
+
+.songs-container h4 {
+  font-family: "Baskerville", serif;
+  color: #192841;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+/* Removed music emoji */
+
+.songs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.songs-list li {
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
+  padding: 10px;
+  background-color: rgba(179, 207, 221, 0.05);
+  border-radius: 8px;
+}
+
+.song-album-art {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.song-info {
+  flex: 1;
+}
+
+.song-name {
+  font-weight: 600;
+  margin: 0;
+  color: #192841;
+}
+
+.song-artist {
+  font-size: 0.9rem;
+  color: #5C6B9C;
+  margin: 2px 0 0 0;
 }
 
 .strava-button {
@@ -242,6 +345,21 @@ nav li a {
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: "Baskerville", serif; /* Match site font */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.strava-button::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('https://cdn.worldvectorlogo.com/logos/strava-2.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: invert(90%);
+  margin-right: 8px;
 }
 
 .strava-button:hover {
@@ -377,15 +495,6 @@ font-family: "Baskerville", serif;
   align-items: center;
   justify-content: center;
   position: relative;
-}
-
-.prompt-icon:before {
-  content: '🏃';
-  position: absolute;
-  font-size: 24px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }
 
 /* Spotify connection prompt styles */
