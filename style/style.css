@@ -147,7 +147,7 @@ nav li a {
 /* Spotify logo styling to use a more muted green */
 .nav-icon[alt="Spotify"] {
   filter: brightness(0) saturate(70%) invert(64%) sepia(40%) saturate(400%) hue-rotate(93deg) brightness(90%) contrast(75%);
-  opacity: 0.9; /* Additional subtle transparency */
+  opacity: 0.95; /* Additional subtle transparency */
 }
 
 .strava-nav-item {
