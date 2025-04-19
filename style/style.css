@@ -190,11 +190,25 @@ header li a {
 
 .error-message {
   color: #192841; /* Navy blue from site */
-  padding: 10px;
-  background-color: rgba(179, 207, 221, 0.5); /* Light blue with opacity */
-  border-radius: 8px;
-  margin-top: 10px;
-  border-left: 4px solid #5C6B9C; /* Secondary blue accent */
+  padding: 15px;
+  background-color: rgba(179, 207, 221, 0.1);
+  border-radius: 12px;
+  margin: 15px auto;
+  text-align: center;
+  font-family: "Baskerville", serif;
+  font-size: 1.1em;
+  max-width: 600px;
+  box-shadow: 0 3px 10px rgba(25, 40, 65, 0.06);
+  border: 1px solid rgba(179, 207, 221, 0.3);
+  position: relative;
+}
+
+.error-message:before {
+  content: '\26A0';
+  font-size: 1.2em;
+  margin-right: 8px;
+  color: #924a46;
+  vertical-align: middle;
 }
 
 .auth-buttons {
@@ -421,12 +435,25 @@ font-family: "Baskerville", serif;
 }
 
 .success-message {
-  color: #1DB954; /* Spotify green color */
-  background-color: rgba(179, 207, 221, 0.3);
-  padding: 8px 12px;
-  border-radius: 6px;
-  margin-top: 10px;
+  color: #192841; /* Navy blue from site */
+  padding: 15px;
+  background-color: rgba(179, 207, 221, 0.1);
+  border-radius: 12px;
+  margin: 15px auto;
   text-align: center;
+  font-family: "Baskerville", serif;
+  font-size: 1.1em;
+  max-width: 600px;
+  box-shadow: 0 3px 10px rgba(25, 40, 65, 0.06);
+  border: 1px solid rgba(179, 207, 221, 0.3);
+  position: relative;
+}
+
+.success-message:before {
+  content: '\2713';
+  font-size: 1.2em;
+  margin-right: 8px;
+  color: #1DB954; /* Spotify green */
+  vertical-align: middle;
   font-weight: bold;
-  border-left: 3px solid #1DB954;
 }
