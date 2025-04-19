@@ -123,7 +123,6 @@ header li a {
   width: 100%;
   background-color: #192841;
   z-index: 1000;
-  padding-top: 20px; /* Fixed value for status bar in iOS standalone mode */
 }
 
 .ios-standalone body {
