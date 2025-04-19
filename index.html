@@ -17,15 +17,29 @@
   <meta name="theme-color" content="#192841">
   <link rel="manifest" href="manifest.json">
   
-  <!-- Fix for iOS status bar -->
+  <!-- Fix for iOS status bar and responsive layout -->
   <style>
-    @supports (-webkit-touch-callout: none) {
+    /* Different handling for homescreen app vs regular browser */
+    @media screen and (max-width: 768px) {
       body {
-        /* The height of the status bar on iOS */
-        padding-top: 50px !important;
+        padding-top: 70px; /* More breathing room on mobile */
+      }
+      .strava-container {
+        margin: 20px 15px !important; /* Add side margins on mobile */
+      }
+      .image-container {
+        margin-top: 30px !important; /* Push title down from navbar */
+      }
+    }
+    
+    /* iOS homescreen app specific */
+    @media screen and (display-mode: standalone), 
+           screen and (-webkit-touch-callout: none) and (display-mode: standalone) {
+      body {
+        padding-top: 50px !important; /* For status bar on iOS homescreen app */
       }
       nav {
-        padding-top: 0 !important;
+        padding-top: 20px !important; /* Push nav content below status bar */
         height: 60px !important;
       }
     }

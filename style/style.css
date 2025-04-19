@@ -181,6 +181,22 @@ nav li a {
   margin: 20px auto;
   max-width: 800px;
   position: relative;
+  padding: 0 15px; /* Add padding on all devices */
+}
+
+/* Mobile responsive adjustments */
+@media screen and (max-width: 768px) {
+  .image-container {
+    margin-top: 20px;
+  }
+  
+  .animate-charcter {
+    font-size: 3rem; /* Smaller title on mobile */
+  }
+  
+  .activity-list {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
 }
 
 .strava-activities {
