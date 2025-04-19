@@ -205,15 +205,33 @@ header li a {
 }
 
 .spotify-button {
-  background-color: #192841; /* Navy blue from site */
-  color: #B3CFDD; /* Light blue color from site */
-  border: none;
-  padding: 12px 20px;
-  font-size: 1.2em;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: "Baskerville", serif;
+  background-color: #1DB954;
+}
+
+.spotify-button:hover {
+background-color: #1ed760;
+}
+
+.logout-button {
+background-color: #5C6B9C;
+opacity: 0.8;
+}
+
+.logout-button:hover {
+background-color: #495883;
+opacity: 1;
+}
+
+.strava-button, .spotify-button, .logout-button {
+padding: 10px 20px;
+margin: 10px;
+font-size: 16px;
+cursor: pointer;
+border: none;
+border-radius: 5px;
+color: white;
+font-weight: bold;
+transition: background-color 0.3s;
 }
 
 .spotify-button:hover {

@@ -14,22 +14,28 @@ const spotifyAuthScope = 'user-read-recently-played';
 
 // DOM Elements
 let authorizeButton;
+let logoutButton;
 let spotifyAuthorizeButton;
+let spotifyLogoutButton;
 let activitiesContainer;
 let loadingSpinner;
 
 // Initialize the app when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     authorizeButton = document.getElementById('strava-authorize');
+    logoutButton = document.getElementById('strava-logout');
     spotifyAuthorizeButton = document.getElementById('spotify-authorize');
+    spotifyLogoutButton = document.getElementById('spotify-logout');
     activitiesContainer = document.getElementById('strava-activities');
     loadingSpinner = document.getElementById('loading-spinner');
     
-    // Set up the Strava authorize button
+    // Set up the Strava buttons
     authorizeButton.addEventListener('click', authorizeStrava);
+    logoutButton.addEventListener('click', logoutStrava);
     
-    // Set up the Spotify authorize button
+    // Set up the Spotify buttons
     spotifyAuthorizeButton.addEventListener('click', authorizeSpotify);
+    spotifyLogoutButton.addEventListener('click', logoutSpotify);
     
     // Check if we're handling an OAuth redirect (code in URL)
     const urlParams = new URLSearchParams(window.location.search);
@@ -69,17 +75,26 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // If we have a valid Strava token, fetch activities
         if (hasValidStravaToken) {
+            authorizeButton.style.display = 'none';
+            logoutButton.style.display = 'inline-block';
             fetchStravaActivities(stravaToken);
         } else {
             // Clear any old Strava data
             localStorage.removeItem('strava_access_token');
             localStorage.removeItem('strava_token_expiry');
+            authorizeButton.style.display = 'inline-block';
+            logoutButton.style.display = 'none';
         }
         
-        // If no valid Spotify token, clear old data
-        if (!hasValidSpotifyToken) {
+        // Handle Spotify button visibility
+        if (hasValidSpotifyToken) {
+            spotifyAuthorizeButton.style.display = 'none';
+            spotifyLogoutButton.style.display = 'inline-block';
+        } else {
             localStorage.removeItem('spotify_access_token');
             localStorage.removeItem('spotify_token_expiry');
+            spotifyAuthorizeButton.style.display = 'inline-block';
+            spotifyLogoutButton.style.display = 'none';
         }
     }
 });
@@ -94,6 +109,57 @@ function authorizeStrava() {
 function authorizeSpotify() {
     const authUrl = `https://accounts.spotify.com/authorize?client_id=${spotifyClientId}&redirect_uri=${spotifyRedirectUri}&response_type=code&scope=${spotifyAuthScope}&state=spotify`;
     window.location.href = authUrl;
+}
+
+// Function to logout from Strava
+function logoutStrava() {
+    // Clear Strava tokens from localStorage
+    localStorage.removeItem('strava_access_token');
+    localStorage.removeItem('strava_token_expiry');
+    
+    // Update UI
+    authorizeButton.style.display = 'inline-block';
+    logoutButton.style.display = 'none';
+    
+    // Clear activities display
+    activitiesContainer.innerHTML = '<p>Connect to Strava to see recent activities.</p>';
+    
+    // Show confirmation message
+    const message = document.createElement('div');
+    message.className = 'success-message';
+    message.textContent = 'Successfully disconnected from Strava';
+    document.querySelector('.strava-container').appendChild(message);
+    
+    setTimeout(() => {
+        message.remove();
+    }, 3000);
+}
+
+// Function to logout from Spotify
+function logoutSpotify() {
+    // Clear Spotify tokens from localStorage
+    localStorage.removeItem('spotify_access_token');
+    localStorage.removeItem('spotify_token_expiry');
+    
+    // Update UI
+    spotifyAuthorizeButton.style.display = 'inline-block';
+    spotifyLogoutButton.style.display = 'none';
+    
+    // Refresh activities display (without song data)
+    const stravaToken = localStorage.getItem('strava_access_token');
+    if (stravaToken) {
+        fetchStravaActivities(stravaToken);
+    }
+    
+    // Show confirmation message
+    const message = document.createElement('div');
+    message.className = 'success-message';
+    message.textContent = 'Successfully disconnected from Spotify';
+    document.querySelector('.strava-container').appendChild(message);
+    
+    setTimeout(() => {
+        message.remove();
+    }, 3000);
 }
 
 // Exchange authorization code for Strava access token
@@ -119,8 +185,9 @@ function exchangeCodeForToken(code) {
             localStorage.setItem('strava_access_token', data.access_token);
             localStorage.setItem('strava_token_expiry', new Date().getTime() + (data.expires_in * 1000));
             
-            // Hide auth button and fetch activities
+            // Update button visibility and fetch activities
             authorizeButton.style.display = 'none';
+            logoutButton.style.display = 'inline-block';
             fetchStravaActivities(data.access_token);
         } else {
             showError('Failed to authorize with Strava.');
@@ -164,8 +231,9 @@ function exchangeSpotifyCodeForToken(code) {
             localStorage.setItem('spotify_access_token', data.access_token);
             localStorage.setItem('spotify_token_expiry', new Date().getTime() + (data.expires_in * 1000));
             
-            // Hide Spotify auth button
+            // Update Spotify button visibility
             spotifyAuthorizeButton.style.display = 'none';
+            spotifyLogoutButton.style.display = 'inline-block';
             
             // If we also have a Strava token, re-fetch activities to include songs
             const stravaToken = localStorage.getItem('strava_access_token');
