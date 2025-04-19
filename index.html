@@ -14,7 +14,7 @@
 <header>
   <nav>
     <ul>
-      <li><a href="#strava">Strava</a></li>
+      <li><a href="#strava">TempoTracker</a></li>
     </ul>
   </nav>
 </header>
@@ -22,7 +22,6 @@
 <body>
 
   <div class="image-container">
-
     <center>
       <div class="container">
         <div class="row">
@@ -31,15 +30,10 @@
           </div>
         </div>
       </div>
-
     </center>
   </div>
 
   <div class="text-container">
-    <center>
-      <h1 id="strava">My Running Journey</h1>
-    </center>
-    <hr style="width:40%">
     
     <div class="strava-container">
       <div id="loading-spinner" class="loading-spinner"></div>
@@ -49,8 +43,13 @@
         <button id="spotify-authorize" class="spotify-button">Connect with Spotify</button>
         <button id="spotify-logout" class="logout-button" style="display: none;">Disconnect Spotify</button>
       </div>
+      <hr style="width:40%">
       <div id="strava-activities" class="strava-activities">
-        <p>Connect to Strava to see recent activities.</p>
+        <div class="connect-prompt">
+          <div class="prompt-icon"></div>
+          <h3>Tune into your running history</h3>
+          <p>Connect your Strava account to view your activities and harmonize them with your Spotify listening history.</p>
+        </div>
       </div>
     </div>
   </div>

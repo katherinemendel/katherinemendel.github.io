@@ -205,11 +205,21 @@ header li a {
 }
 
 .spotify-button {
-  background-color: #1DB954;
+  background-color: #192841; /* Navy blue to match Strava button */
+  color: #B3CFDD; /* Light blue color from site */
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.2em;
+  border-radius: 8px; /* Increased border radius for softer look */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Baskerville", serif; /* Match site font */
 }
 
 .spotify-button:hover {
-background-color: #1ed760;
+  background-color: #5C6B9C; /* Secondary blue color from site */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
 }
 
 .logout-button {
@@ -222,22 +232,110 @@ background-color: #495883;
 opacity: 1;
 }
 
+/* Common button properties */
 .strava-button, .spotify-button, .logout-button {
-padding: 10px 20px;
 margin: 10px;
-font-size: 16px;
 cursor: pointer;
 border: none;
-border-radius: 5px;
-color: white;
-font-weight: bold;
-transition: background-color 0.3s;
+transition: all 0.3s ease;
+font-family: "Baskerville", serif;
 }
 
-.spotify-button:hover {
-  background-color: #5C6B9C; /* Secondary blue color */
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+/* Connect prompt styles */
+.connect-prompt {
+  text-align: center;
+  background-color: rgba(179, 207, 221, 0.1);
+  border-radius: 12px;
+  padding: 30px 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(25, 40, 65, 0.08);
+  border: 1px solid rgba(179, 207, 221, 0.3);
+}
+
+.connect-prompt h3 {
+  color: #192841;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.connect-prompt p {
+  color: #5C6B9C;
+  font-size: 1.1em;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.prompt-icon {
+  margin: 0 auto 20px;
+  width: 60px;
+  height: 60px;
+  background-color: rgba(179, 207, 221, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.prompt-icon:before {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23192841"><path d="M13 5.5C13 4.12 11.88 3 10.5 3S8 4.12 8 5.5v5.26L6.5 12 8 13.25V17.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V13.25L14.5 12 13 10.76V5.5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Spotify connection prompt styles */
+.spotify-connect-prompt {
+  text-align: center;
+  background-color: rgba(179, 207, 221, 0.1);
+  border-radius: 10px;
+  padding: 20px 15px;
+  margin: 15px 0;
+  box-shadow: 0 3px 10px rgba(25, 40, 65, 0.06);
+  border: 1px solid rgba(179, 207, 221, 0.3);
+}
+
+.spotify-connect-prompt h4 {
+  color: #192841;
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.spotify-connect-prompt p {
+  color: #5C6B9C;
+  font-size: 1em;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
+.spotify-prompt-icon {
+  margin: 0 auto 15px;
+  width: 48px;
+  height: 48px;
+  background-color: rgba(179, 207, 221, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.spotify-prompt-icon:before {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23192841"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1.5-5.59V8.16c0-.22.26-.33.42-.19l4.74 4.2c.13.11.13.31 0 .42l-4.74 4.2c-.16.15-.42.04-.42-.19z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* Song display styles */
@@ -317,10 +415,12 @@ transition: background-color 0.3s;
 }
 
 .success-message {
-  color: #192841;
+  color: #1DB954; /* Spotify green color */
   background-color: rgba(179, 207, 221, 0.3);
   padding: 8px 12px;
   border-radius: 6px;
   margin-top: 10px;
-  border-left: 3px solid #5C6B9C;
+  text-align: center;
+  font-weight: bold;
+  border-left: 3px solid #1DB954;
 }

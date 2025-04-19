@@ -504,7 +504,11 @@ function displayActivities(activities) {
             // If no Spotify token
             activityHTML += `
                 <div class="songs-container">
-                    <p>Connect with Spotify to see songs played during your activity.</p>
+                    <div class="spotify-connect-prompt">
+                        <div class="spotify-prompt-icon"></div>
+                        <h4>Add the soundtrack to your run</h4>
+                        <p>Connect your Spotify account to discover what songs powered your pace.</p>
+                    </div>
                 </div>
             `;
         }
