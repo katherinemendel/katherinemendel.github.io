@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style/style.css">
   
@@ -15,6 +15,21 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="TempoTracker">
   <meta name="theme-color" content="#192841">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Fix for iOS status bar -->
+  <style>
+    @supports (-webkit-touch-callout: none) {
+      body {
+        /* The height of the status bar on iOS */
+        padding-top: 50px !important;
+      }
+      nav {
+        padding-top: 0 !important;
+        height: 60px !important;
+      }
+    }
+  </style>
   
   <title>TempoTracker</title>
 
