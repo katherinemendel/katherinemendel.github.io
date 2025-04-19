@@ -364,6 +364,37 @@ font-family: "Baskerville", serif;
   padding-top: 15px;
 }
 
+/* Authentication loading indicator */
+.auth-loading {
+  text-align: center;
+  padding: 30px 20px;
+  margin: 20px auto;
+  background-color: rgba(179, 207, 221, 0.1);
+  border-radius: 12px;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(25, 40, 65, 0.08);
+  border: 1px solid rgba(179, 207, 221, 0.3);
+}
+
+.auth-loading p {
+  color: #192841;
+  font-size: 1.2em;
+  font-family: "Baskerville", serif;
+  margin-bottom: 15px;
+}
+
+.auth-loading:after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 4px solid rgba(179, 207, 221, 0.3);
+  border-top-color: #5C6B9C;
+  animation: spin 1s ease-in-out infinite;
+}
+
 .songs-container h4 {
   color: #5C6B9C;
   margin-top: 0;

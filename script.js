@@ -51,6 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const spotifyTokenExpiry = localStorage.getItem('spotify_token_expiry');
     
     if (stravaCode) {
+        // Show loading indicator during authentication
+        showLoading(true);
+        activitiesContainer.innerHTML = '<div class="auth-loading"><p>Authenticating... Please wait...</p></div>';
+        
         // If state is 'spotify', this is a Spotify callback
         if (state === 'spotify') {
             // Remove code from URL to prevent sharing
