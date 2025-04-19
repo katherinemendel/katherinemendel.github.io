@@ -175,7 +175,7 @@ function logoutSpotify() {
 function exchangeCodeForToken(code) {
     showLoading(true);
     
-    fetch('https://www.strava.com/oauth/token', {
+    fetch(`https://www.strava.com/oauth/token`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -187,9 +187,15 @@ function exchangeCodeForToken(code) {
             grant_type: 'authorization_code'
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.access_token) {
+            console.log('Token exchange successful');
             // Save token to localStorage
             localStorage.setItem('strava_access_token', data.access_token);
             localStorage.setItem('strava_token_expiry', new Date().getTime() + (data.expires_in * 1000));
@@ -198,12 +204,23 @@ function exchangeCodeForToken(code) {
             updateButtonVisibility();
             fetchStravaActivities(data.access_token);
         } else {
-            showError('Failed to authorize with Strava.');
+            console.error('No access token in response', data);
+            showError('Failed to authorize with Strava: No access token received.');
         }
     })
     .catch(error => {
         console.error('Error exchanging code for token:', error);
-        showError('Failed to connect to Strava. Please try again later.');
+        // Check if we already have a token (might be from a previous authorization)
+        const existingToken = localStorage.getItem('strava_access_token');
+        const expiry = localStorage.getItem('strava_token_expiry');
+        
+        if (existingToken && expiry && new Date().getTime() < parseInt(expiry)) {
+            console.log('Using existing token instead');
+            updateButtonVisibility();
+            fetchStravaActivities(existingToken);
+        } else {
+            showError('Failed to connect to Strava. Please try again later.');
+        }
     })
     .finally(() => {
         showLoading(false);
