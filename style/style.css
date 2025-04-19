@@ -114,22 +114,34 @@ header li a {
   text-decoration: none;
 }
 
-nav {
+/* Essential background for the navbar to fill iOS status bar */
+body::before {
+  content: '';
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: env(safe-area-inset-top);
+  background-color: #192841; /* Match your site's navy blue */
+  z-index: 1001; /* Higher than nav */
+}
+
+nav {
+  position: fixed;
+  top: env(safe-area-inset-top);
+  left: 0;
   right: 0;
   width: 100%;
-  background-color: transparent;
+  background-color: #192841; /* Match the status bar background */
   z-index: 1000;
-  padding-top: env(safe-area-inset-top);
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
 }
 
-/* Add body padding to account for the nav */
+/* Add body padding to account for the fixed nav */
 body {
-  padding-top: env(safe-area-inset-top);
+  padding-top: calc(env(safe-area-inset-top) + 60px); /* Status bar + nav height */
+  margin: 0;
 }
 
 nav ul {
