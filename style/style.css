@@ -117,9 +117,19 @@ header li a {
 nav {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   background-color: transparent;
   z-index: 1000;
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Add body padding to account for the nav */
+body {
+  padding-top: env(safe-area-inset-top);
 }
 
 nav ul {
@@ -147,7 +157,7 @@ nav li a {
 /* Spotify logo styling to use a more muted green */
 .nav-icon[alt="Spotify"] {
   filter: brightness(0) saturate(70%) invert(64%) sepia(40%) saturate(400%) hue-rotate(93deg) brightness(90%) contrast(75%);
-  opacity: 0.95; /* Additional subtle transparency */
+  opacity: 0.9; /* Additional subtle transparency */
 }
 
 .strava-nav-item {
@@ -159,7 +169,7 @@ nav li a {
   height: 30px; /* Fixed height to maintain aspect ratio */
   filter: invert(100%); /* Make SVG white */
   margin-right: 8px; /* Space between logo and text */
-  opacity: 0.9; /* Additional subtle transparency */
+  opacity: 0.8; /* Additional subtle transparency */
 }
 
 .nav-icon:hover, .strava-nav-item a:hover {
