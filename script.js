@@ -121,8 +121,14 @@ function logoutStrava() {
     authorizeButton.style.display = 'inline-block';
     logoutButton.style.display = 'none';
     
-    // Clear activities display
-    activitiesContainer.innerHTML = '<p>Connect to Strava to see recent activities.</p>';
+    // Clear activities display and add styled connect prompt
+    activitiesContainer.innerHTML = `
+        <div class="connect-prompt">
+            <div class="prompt-icon"></div>
+            <h3>Tune into your running history</h3>
+            <p>Connect your Strava account to view your activities and harmonize them with your Spotify listening history.</p>
+        </div>
+    `;
     
     // Show confirmation message
     const message = document.createElement('div');
