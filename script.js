@@ -53,7 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (stravaCode) {
         // Show loading indicator during authentication
         showLoading(true);
-        activitiesContainer.innerHTML = '<div class="auth-loading"><p>Authenticating... Please wait...</p></div>';
+        
+        // Display a service-specific loading message
+        const service = state === 'spotify' ? 'Spotify' : 'Strava';
+        activitiesContainer.innerHTML = `
+            <div class="auth-loading">
+                <p>Connecting to ${service}...</p>
+                <p>Please wait while we fine tune your experience</p>
+            </div>
+        `;
         
         // If state is 'spotify', this is a Spotify callback
         if (state === 'spotify') {
@@ -182,7 +190,7 @@ function logoutSpotify() {
 
 // Exchange authorization code for Strava access token
 function exchangeCodeForToken(code) {
-    showLoading(true);
+    // Don't show loading indicator here - it's already shown
     
     fetch('https://www.strava.com/oauth/token', {
         method: 'POST',
@@ -202,39 +210,18 @@ function exchangeCodeForToken(code) {
             // Save token to localStorage
             localStorage.setItem('strava_access_token', data.access_token);
             localStorage.setItem('strava_token_expiry', new Date().getTime() + (data.expires_in * 1000));
-            
-            // Update button visibility using our consistent function
-            updateButtonVisibility();
-            fetchStravaActivities(data.access_token);
-        } else {
-            // Add delay before showing the error to allow token process to finish
-            setTimeout(() => {
-                // Check if we got a token in the meantime
-                if (!localStorage.getItem('strava_access_token')) {
-                    showError('Failed to authorize with Strava.');
-                }
-            }, 1500);
         }
+        // No else clause - don't show errors during redirect
     })
     .catch(error => {
         console.error('Error exchanging code for token:', error);
-        // Add delay before showing the error to allow token process to finish
-        setTimeout(() => {
-            // Check if we got a token in the meantime
-            if (!localStorage.getItem('strava_access_token')) {
-                showError('Failed to connect to Strava. Please try again later.');
-            }
-        }, 1500);
-    })
-    .finally(() => {
-        showLoading(false);
+        // Don't show errors during redirect
     });
 }
 
 // Exchange authorization code for Spotify access token
 function exchangeSpotifyCodeForToken(code) {
-    showLoading(true);
-
+    // Don't show loading indicator here - it's already shown
     
     // This would normally be handled server-side due to the client_secret
     // For demo purposes we're doing it client-side
@@ -254,30 +241,16 @@ function exchangeSpotifyCodeForToken(code) {
     })
     .then(response => response.json())
     .then(data => {
-
         if (data.access_token) {
             // Save token to localStorage
             localStorage.setItem('spotify_access_token', data.access_token);
             localStorage.setItem('spotify_token_expiry', new Date().getTime() + (data.expires_in * 1000));
-            
-            // Update button visibility using our consistent function
-            updateButtonVisibility();
-            
-            // If we also have a Strava token, re-fetch activities to include songs
-            const stravaToken = localStorage.getItem('strava_access_token');
-            if (stravaToken) {
-                fetchStravaActivities(stravaToken);
-            }
-        } else {
-            showError('Failed to authorize with Spotify.');
         }
+        // No else clause - don't show errors during redirect
     })
     .catch(error => {
         console.error('Error exchanging code for Spotify token:', error);
-        showError('Failed to connect to Spotify. Please try again later.');
-    })
-    .finally(() => {
-        showLoading(false);
+        // Don't show errors during redirect
     });
 }
 
