@@ -7,7 +7,9 @@ const authScope = 'activity:read_all,activity:write';
 // Spotify API configuration
 const spotifyClientId = 'Bbf257ddfc0140dcaf7d70aaab213205';
 const spotifyClientSecret = '06f1b3ca4b1644ef99137d6b9cdaa72c';
-const spotifyRedirectUri = window.location.origin + window.location.pathname;
+// For local development use: window.location.origin + window.location.pathname
+// For production use the exact URI registered in Spotify Dashboard
+const spotifyRedirectUri = "https://katherinemendel.github.io/";
 const spotifyAuthScope = 'user-read-recently-played';
 
 // DOM Elements
@@ -263,16 +265,34 @@ function fetchSpotifyTracksAndMatchActivities(spotifyToken, activities) {
 
 // Match songs with activities based on timestamps
 function matchSongsWithActivities(activities, spotifyItems) {
+    console.log('Matching songs with activities');
+    console.log('Activities:', activities.length);
+    console.log('Spotify items:', spotifyItems.length);
+    
+    // Average song duration estimate (in milliseconds)
+    const averageSongDuration = 3.5 * 60 * 1000; // 3.5 minutes
+    
     return activities.map(activity => {
         // Get start and end time of activity
         const startTime = new Date(activity.start_date).getTime();
         const endTime = startTime + (activity.elapsed_time * 1000);
         
-        // Find songs played during this activity
+        console.log(`Activity: ${activity.name}, Start: ${new Date(startTime).toLocaleString()}, End: ${new Date(endTime).toLocaleString()}, Duration: ${activity.elapsed_time}s`);
+        
+        // Find songs that could have been playing during the activity
         const songs = spotifyItems.filter(item => {
+            // When the song started playing
             const playedAt = new Date(item.played_at).getTime();
-            return playedAt >= startTime && playedAt <= endTime;
+            
+            // Estimate when the song ended (using average song duration)
+            const estimatedSongEnd = playedAt + averageSongDuration;
+            
+            // Check if there's any overlap between song playing period and activity period
+            // Song starts before activity ends AND song ends after activity starts
+            return playedAt <= endTime && estimatedSongEnd >= startTime;
         });
+        
+        console.log(`Found ${songs.length} songs that overlapped with activity: ${activity.name}`);
         
         // Add songs to activity object
         return {
@@ -299,7 +319,7 @@ function updateActivityDescription(activityId, songs) {
     
     // Create description with songs
     const songsList = songs.map(song => `${song.name} - ${song.artist}`).join('\n');
-    const description = `Songs played during this activity:\n\n${songsList}`;
+    const description = `Songs played during this activity:\n\n${songsList}\n\n—Added by TempoTracker`;
     
     fetch(`https://www.strava.com/api/v3/activities/${activityId}`, {
         method: 'PUT',
