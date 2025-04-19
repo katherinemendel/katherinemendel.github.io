@@ -453,7 +453,7 @@ function displayActivities(activities) {
             const paceSeconds = activity.moving_time / (activity.distance / 1609.34); // seconds per mile
             const paceMinutes = Math.floor(paceSeconds / 60);
             const paceRemainingSeconds = Math.floor(paceSeconds % 60);
-            paceInfo = `<p>Pace: ${paceMinutes}:${paceRemainingSeconds.toString().padStart(2, '0')} /mile</p>`;
+            paceInfo = `Pace: ${paceMinutes}:${paceRemainingSeconds.toString().padStart(2, '0')} /mile`;
         }
         
         // Convert meters to miles
@@ -466,7 +466,7 @@ function displayActivities(activities) {
             <p>Type: ${activity.type}</p>
             <p>Distance: ${distanceMiles} miles</p>
             <p>Duration: ${formatDuration(activity.moving_time)}</p>
-            ${paceInfo}
+            <p>${paceInfo}</p>
         `;
         
         // Add songs section if available

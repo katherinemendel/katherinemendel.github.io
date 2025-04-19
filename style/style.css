@@ -318,10 +318,12 @@ nav li a {
   opacity: 0.9;
 }
 
-.activity-card p:nth-of-type(1)::before { content: '🏃‍♂️'; } /* Type */
-.activity-card p:nth-of-type(2)::before { content: '📏'; } /* Distance */
-.activity-card p:nth-of-type(3)::before { content: '⏱️'; } /* Duration */
-.activity-card p:nth-of-type(4)::before { content: '⚡'; } /* Pace - lightning bolt for speed */
+/* More specific selector for activity card details */
+.activity-card > p:nth-of-type(1)::before { content: '📅'; } /* Calendar emoji */
+.activity-card > p:nth-of-type(2)::before { content: '🏃‍♂️'; } /* Type */
+.activity-card > p:nth-of-type(3)::before { content: '📏'; } /* Distance */
+.activity-card > p:nth-of-type(4)::before { content: '⏱️'; } /* Duration */
+.activity-card > p:nth-of-type(5)::before { content: '⚡'; } /* Pace - lightning bolt for speed */
 
 /* Songs section styling */
 .songs-container {
@@ -529,6 +531,12 @@ font-family: "Baskerville", serif;
   position: relative;
 }
 
+.prompt-icon::before {
+  content: '🎵';
+  font-size: 24px;
+  position: absolute;
+}
+
 /* Spotify connection prompt styles */
 .spotify-connect-prompt {
   text-align: center;
@@ -706,3 +714,4 @@ font-family: "Baskerville", serif;
   vertical-align: middle;
   font-weight: bold;
 }
+
