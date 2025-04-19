@@ -65,36 +65,39 @@ document.addEventListener('DOMContentLoaded', () => {
             exchangeCodeForToken(stravaCode);
         }
     } else {
-        // Check if we have valid tokens
-        const hasValidStravaToken = stravaToken && stravaTokenExpiry && new Date().getTime() < parseInt(stravaTokenExpiry);
-        const hasValidSpotifyToken = spotifyToken && spotifyTokenExpiry && new Date().getTime() < parseInt(spotifyTokenExpiry);
+        // Check if we have valid tokens and update button visibility
+        function updateButtonVisibility() {
+            // Check token validity
+            const validStravaToken = stravaToken && stravaTokenExpiry && new Date().getTime() < parseInt(stravaTokenExpiry);
+            const validSpotifyToken = spotifyToken && spotifyTokenExpiry && new Date().getTime() < parseInt(spotifyTokenExpiry);
+            
+            // Update Strava buttons
+            authorizeButton.style.display = validStravaToken ? 'none' : 'inline-block';
+            logoutButton.style.display = validStravaToken ? 'inline-block' : 'none';
+            
+            // Update Spotify buttons
+            spotifyAuthorizeButton.style.display = validSpotifyToken ? 'none' : 'inline-block';
+            spotifyLogoutButton.style.display = validSpotifyToken ? 'inline-block' : 'none';
+            
+            return { validStravaToken, validSpotifyToken };
+        }
         
-        // Update UI based on token validity
-        authorizeButton.style.display = hasValidStravaToken ? 'none' : 'inline-block';
-        spotifyAuthorizeButton.style.display = hasValidSpotifyToken ? 'none' : 'inline-block';
+        // Update button visibility
+        const { validStravaToken: hasValidStravaToken, validSpotifyToken: hasValidSpotifyToken } = updateButtonVisibility();
         
         // If we have a valid Strava token, fetch activities
         if (hasValidStravaToken) {
-            authorizeButton.style.display = 'none';
-            logoutButton.style.display = 'inline-block';
             fetchStravaActivities(stravaToken);
         } else {
             // Clear any old Strava data
             localStorage.removeItem('strava_access_token');
             localStorage.removeItem('strava_token_expiry');
-            authorizeButton.style.display = 'inline-block';
-            logoutButton.style.display = 'none';
         }
         
-        // Handle Spotify button visibility
-        if (hasValidSpotifyToken) {
-            spotifyAuthorizeButton.style.display = 'none';
-            spotifyLogoutButton.style.display = 'inline-block';
-        } else {
+        // If no valid Spotify token, clear old data
+        if (!hasValidSpotifyToken) {
             localStorage.removeItem('spotify_access_token');
             localStorage.removeItem('spotify_token_expiry');
-            spotifyAuthorizeButton.style.display = 'inline-block';
-            spotifyLogoutButton.style.display = 'none';
         }
     }
 });
@@ -191,9 +194,8 @@ function exchangeCodeForToken(code) {
             localStorage.setItem('strava_access_token', data.access_token);
             localStorage.setItem('strava_token_expiry', new Date().getTime() + (data.expires_in * 1000));
             
-            // Update button visibility and fetch activities
-            authorizeButton.style.display = 'none';
-            logoutButton.style.display = 'inline-block';
+            // Update button visibility using our consistent function
+            updateButtonVisibility();
             fetchStravaActivities(data.access_token);
         } else {
             showError('Failed to authorize with Strava.');
@@ -237,9 +239,8 @@ function exchangeSpotifyCodeForToken(code) {
             localStorage.setItem('spotify_access_token', data.access_token);
             localStorage.setItem('spotify_token_expiry', new Date().getTime() + (data.expires_in * 1000));
             
-            // Update Spotify button visibility
-            spotifyAuthorizeButton.style.display = 'none';
-            spotifyLogoutButton.style.display = 'inline-block';
+            // Update button visibility using our consistent function
+            updateButtonVisibility();
             
             // If we also have a Strava token, re-fetch activities to include songs
             const stravaToken = localStorage.getItem('strava_access_token');
