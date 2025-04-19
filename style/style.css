@@ -114,49 +114,22 @@ header li a {
   text-decoration: none;
 }
 
-/* iOS homescreen app specific styling */
-.ios-standalone nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background-color: #192841;
-  z-index: 1000;
-}
-
-.ios-standalone body {
-  padding-top: 80px; /* 60px (nav) + 20px (status bar) */
-}
-
-/* Regular browser styling */
-:not(.ios-standalone) body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: env(safe-area-inset-top);
-  background-color: #192841; /* Match your site's navy blue */
-  z-index: 1001; /* Higher than nav */
+/* Simple, universal navbar styling */
+body {
+  margin: 0;
+  padding: 0;
+  padding-top: 60px; /* Height of navbar */
 }
 
 nav {
   position: fixed;
-  top: env(safe-area-inset-top);
+  top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  background-color: #192841; /* Match the status bar background */
+  height: 60px;
+  background-color: #192841;
   z-index: 1000;
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-}
-
-/* Add body padding to account for the fixed nav */
-body {
-  padding-top: calc(env(safe-area-inset-top) + 60px); /* Status bar + nav height */
-  margin: 0;
 }
 
 nav ul {
